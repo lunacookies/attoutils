@@ -1,5 +1,6 @@
 use anyhow::Result;
 use clap::{App, Arg};
+use rayon::prelude::*;
 use std::env;
 
 fn main() -> Result<()> {
@@ -22,6 +23,13 @@ fn main() -> Result<()> {
 
     for dir in dirs.iter() {
         listings.push(ls::get_dir_contents(dir)?);
+    }
+
+    // We use rayon’s par_sort_unstable_by() so that comparisons are based on the entry’s file name.
+    for listing in listings.iter_mut() {
+        listing
+            .entries
+            .par_sort_unstable_by(|a, b| a.file_name().cmp(&b.file_name()));
     }
 
     listings.iter().enumerate().for_each(|(i, listing)| {
