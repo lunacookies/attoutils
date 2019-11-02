@@ -9,4 +9,3 @@ edition = "2018"
 [dependencies]
 anyhow = "1.0"
 libatto = { path = "../libatto" }
-term_size = "0.1"

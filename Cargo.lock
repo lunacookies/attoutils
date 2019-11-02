@@ -61,7 +61,6 @@ version = "0.1.0"
 dependencies = [
  "anyhow 1.0.18 (registry+https://github.com/rust-lang/crates.io-index)",
  "libatto 0.1.0",
- "term_size 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -133,6 +132,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "libatto"
 version = "0.1.0"
+dependencies = [
+ "anyhow 1.0.18 (registry+https://github.com/rust-lang/crates.io-index)",
+ "term_size 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "libc"
