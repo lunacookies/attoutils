@@ -1,12 +1,22 @@
 use anyhow::Result;
+use clap::{App, Arg};
 use std::env;
 
 fn main() -> Result<()> {
-    let mut dirs: Vec<_> = env::args().skip(1).collect();
+    let matches = App::new("ls")
+        .version("0.1")
+        .author("Aramis Razzaghipour <aramisnoah@gmail.com>")
+        .arg(
+            Arg::with_name("targets")
+                .help("Specifies which directories to list the contents of. Defaults to the current directory.")
+                .multiple(true)
+                .value_name("DIRECTORY")
+        )
+        .get_matches();
 
-    if dirs.is_empty() {
-        dirs.push(env::current_dir()?.to_string_lossy().into())
-    }
+    let dirs: Vec<String> = matches
+        .values_of_lossy("targets")
+        .unwrap_or(vec![env::current_dir()?.to_string_lossy().into()]);
 
     let mut listings = Vec::with_capacity(dirs.len());
 
