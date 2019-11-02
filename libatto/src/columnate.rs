@@ -1,14 +1,3 @@
-use anyhow::Result;
-
-pub fn get_term_width() -> Result<usize> {
-    use anyhow::anyhow;
-
-    match term_size::dimensions() {
-        Some((width, _)) => Ok(width),
-        None => Err(anyhow!("could not determine terminal dimensions.")),
-    }
-}
-
 fn get_longest_str_len(x: &[&str]) -> usize {
     match x.iter().map(|s| s.len()).max() {
         Some(len) => len,
@@ -30,11 +19,11 @@ fn ceil(n: usize, m: usize) -> usize {
     }
 }
 
-pub fn columnate(items: &[&str], total_row_len: usize, padding: usize) -> Result<String> {
+pub fn columnate(items: &[&str], total_row_len: usize, padding: usize) -> String {
     // Early return for trivial cases.
     match items.len() {
-        1 => return Ok(items[0].to_string()),
-        0 => return Ok(String::new()),
+        1 => return items[0].to_string(),
+        0 => return String::new(),
         _ => (),
     }
 
@@ -70,7 +59,7 @@ pub fn columnate(items: &[&str], total_row_len: usize, padding: usize) -> Result
         }
     });
 
-    Ok(rows.join("\n"))
+    rows.join("\n")
 }
 
 #[cfg(test)]

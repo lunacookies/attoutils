@@ -1,5 +1,8 @@
 use std::io;
 
+mod columnate;
+pub use columnate::columnate;
+
 pub fn get_stdin() -> io::Result<String> {
     use std::io::Read;
 
