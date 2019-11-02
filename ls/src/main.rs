@@ -24,8 +24,12 @@ fn main() -> Result<()> {
         listings.push(ls::get_dir_contents(dir)?);
     }
 
-    listings.iter().for_each(|listing| {
+    listings.iter().enumerate().for_each(|(i, listing)| {
         if dirs.len() > 1 {
+            // Add an empty line between directory listings.
+            if i > 0 {
+                println!("");
+            }
             println!("{}:", listing.path.to_string_lossy());
         };
 
