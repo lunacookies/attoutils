@@ -1,4 +1,6 @@
-fn get_longest_str_len(x: &[&str]) -> usize {
+use std::{ops::Deref, string::ToString};
+
+fn get_longest_str_len<T: Deref<Target = str>>(x: &[T]) -> usize {
     match x.iter().map(|s| s.len()).max() {
         Some(len) => len,
         None => 0,
@@ -19,7 +21,11 @@ fn ceil(n: usize, m: usize) -> usize {
     }
 }
 
-pub fn columnate(items: &[&str], total_row_len: usize, padding: usize) -> String {
+pub fn columnate<T: ToString + Deref<Target = str>>(
+    items: &[T],
+    total_row_len: usize,
+    padding: usize,
+) -> String {
     // Early return for trivial cases.
     match items.len() {
         1 => return items[0].to_string(),
