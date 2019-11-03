@@ -15,7 +15,7 @@ fn main() -> Result<()> {
         )
         .arg(
             Arg::with_name("single_column")
-                .help("Displays directory listings in a single column. Defaults to false.")
+                .help("Displays directory listings in a single column")
                 .long("single-column")
                 .short("1")
         )
