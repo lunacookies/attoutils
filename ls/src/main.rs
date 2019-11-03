@@ -19,6 +19,12 @@ fn main() -> Result<()> {
                 .long("single-column")
                 .short("1")
         )
+        .arg(
+            Arg::with_name("show_hidden")
+                .help("Shows hidden files and directories")
+                .long("all")
+                .short("a")
+        )
         .get_matches();
 
     let dirs: Vec<String> = matches
@@ -31,8 +37,13 @@ fn main() -> Result<()> {
         listings.push(ls::get_dir_contents(dir)?);
     }
 
-    // We use rayon’s par_sort_unstable_by() so that comparisons are based on the entry’s file name.
     for listing in listings.iter_mut() {
+        if !matches.is_present("show_hidden") {
+            listing.remove_hidden();
+        }
+
+        // We use rayon’s par_sort_unstable_by() so that comparisons are based on the entry’s file
+        // name.
         listing
             .entries
             .par_sort_unstable_by(|a, b| a.file_name().cmp(&b.file_name()));

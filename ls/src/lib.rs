@@ -29,6 +29,14 @@ impl Dirs {
     pub fn columns(self) -> ColumnDirs {
         ColumnDirs::new(self)
     }
+
+    pub fn remove_hidden(&mut self) {
+        self.entries.retain(|entry| {
+            let file_name = entry.file_name();
+            let file_name = file_name.to_string_lossy();
+            !file_name.starts_with(".")
+        });
+    }
 }
 
 pub struct ColumnDirs(Dirs);
