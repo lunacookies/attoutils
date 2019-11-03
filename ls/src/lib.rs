@@ -1,3 +1,4 @@
+use libatto;
 use std::{
     fmt,
     fs::{self, DirEntry},
@@ -12,14 +13,38 @@ pub struct Dirs {
 
 impl fmt::Display for Dirs {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let output: Vec<_> = self
-            .entries
+        let entries: Vec<_> = self.to_string_iter().collect();
+        write!(f, "{}", entries.join("\n"))
+    }
+}
+
+impl Dirs {
+    fn to_string_iter(&self) -> impl Iterator<Item = String> + '_ {
+        self.entries
             .iter()
             .map(|entry| entry.file_name())
             .map(|entry| entry.to_string_lossy().to_string())
-            .collect();
+    }
 
-        write!(f, "{}", output.join("\n"))
+    pub fn columns(self) -> ColumnDirs {
+        ColumnDirs::new(self)
+    }
+}
+
+pub struct ColumnDirs(Dirs);
+
+impl ColumnDirs {
+    fn new(d: Dirs) -> Self {
+        ColumnDirs(d)
+    }
+}
+
+impl fmt::Display for ColumnDirs {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let entries: Vec<_> = self.0.to_string_iter().collect();
+        let width = libatto::get_term_width_with_fallback(80);
+
+        write!(f, "{}", libatto::columnate(&entries, width, 8))
     }
 }
 

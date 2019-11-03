@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 anyhow = "1.0"
+libatto = { path = "../libatto" }
 rayon = "1.2"
 
 [dependencies.clap]
