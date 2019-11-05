@@ -6,5 +6,6 @@ A reimplementation of a few basic \*nix utilities (inspired by Plan 9) in Rust f
 - `column`
 - `ls`
 - `sort`
+- `walk`
 
 Also included is `trs`, a handy utility for trashing files.
