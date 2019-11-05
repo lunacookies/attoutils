@@ -1,6 +1,7 @@
 [workspace]
 
 members = [
+    "cat",
     "column",
     "libatto",
     "ls",
