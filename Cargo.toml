@@ -5,6 +5,7 @@ members = [
     "column",
     "libatto",
     "ls",
+    "sh",
     "sort",
     "trs",
     "walk",
